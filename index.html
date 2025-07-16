@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشاهده اطلاعات دانش‌آموز</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>مشاهده اطلاعات دانش‌آموز</h1>
+  <input type="text" id="studentId" placeholder="شماره دانش‌آموزی را وارد کنید">
+  <button onclick="fetchData()">مشاهده</button>
+  <div id="result"></div>
+
+  <script>
+    function fetchData() {
+      const studentId = document.getElementById("studentId").value;
+      const url = `https://script.google.com/macros/s/AKfycbwKIGt5dS5R9BHXY2lIRnif9a4tm7ibU0qFl5n7n3tsyqD6CT5S2JsrCpQVdzuYTKJV/exec{studentId}`; // لینک اسکریپت را اینجا قرار دهید
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          const resultDiv = document.getElementById("result");
+          if (data.length > 0) {
+            resultDiv.innerHTML = `
+              <p>شماره دانش‌آموزی: ${data[0]}</p>
+              <p>نام: ${data[1]}</p>
+              <p>کلاس: ${data[2]}</p>
+              <p>نمره: ${data[3]}</p>
+            `;
+          } else {
+            resultDiv.innerHTML = "<p>اطلاعاتی یافت نشد.</p>";
+          }
+        })
+        .catch(error => {
+          document.getElementById("result").innerHTML = "<p>خطا در دریافت اطلاعات.</p>";
+        });
+    }
+  </script>
+</body>
+</html>
